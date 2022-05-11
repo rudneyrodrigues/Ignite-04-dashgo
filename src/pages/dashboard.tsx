@@ -26,22 +26,32 @@ const options = {
   tooltip: {
     enabled: false,
   },
-  xaxis: {
-    type: 'area',
-    axisBorder: {
-      color: theme.colors.gray[600],
-    },
-    axisTicks: {
-      color: theme.colors.gray[600],
-    },
-    categories: [
-      '2022-04-25T00:00:00.000Z',
-      '2022-04-26T00:00:00.000Z',
-      '2022-04-27T00:00:00.000Z',
-      '2022-04-28T00:00:00.000Z',
-      '2022-04-29T00:00:00.000Z',
-      '2022-04-30T00:00:00.000Z',
-    ]
+  // xaxis: {
+  //   type: "datetime",
+  //   categories: [
+  //     '2022-04-24T00:00:00.000Z',
+  //     '2022-04-25T00:00:00.000Z',
+  //     '2022-04-26T00:00:00.000Z',
+  //     '2022-04-27T00:00:00.000Z',
+  //     '2022-04-28T00:00:00.000Z',
+  //     '2022-04-29T00:00:00.000Z',
+  //     '2022-04-30T00:00:00.000Z',
+  //   ],
+  //   axisBorder: {
+  //     color: theme.colors.gray[600],
+  //   },
+  //   axisTicks: {
+  //     color: theme.colors.gray[600],
+  //   },
+  // },
+  fill: {
+    opacity: 0.3,
+    type: 'gradient',
+    gradient: {
+      shade: 'dark',
+      opacityFrom: 0.7,
+      opacityTo: 0.3,
+    }
   }
 };
 
@@ -92,6 +102,12 @@ export default function Dashboard() {
             // pb="4"
           >
             <Text fontSize="lg" mb="4">Taxa de abertura</Text>
+            <Chart
+              options={options}
+              series={series}
+              type="area"
+              height={160}
+            />
           </Box>
         </SimpleGrid>
       </Flex>
