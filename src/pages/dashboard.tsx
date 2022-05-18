@@ -65,52 +65,57 @@ const series = [
 
 export default function Dashboard() {
   return (
-    <Flex direction="column" h="100vh">
+    <>
       <Head>
-        <title>Dashboard | dashgo</title>
+        <title>Dashboard | Dashgo.</title>
       </Head>
+      <Flex direction="column" h="100vh">
+        <Head>
+          <title>Dashboard | dashgo</title>
+        </Head>
 
-      <Header />
+        <Header />
 
-      <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
-        <Sidebar />
+        <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
+          <Sidebar />
 
-        <SimpleGrid
-          flex="1"
-          gap="4"
-          minChildWidth="320px" //Esta propriedade só existe dentro do SimpleGrid
-        >
-          <Box
-            p="8"
-            bg="gray.800"
-            borderRadius="8"
-            pb="4"
+          <SimpleGrid
+            flex="1"
+            gap="4"
+            minChildWidth="320px" //Esta propriedade só existe dentro do SimpleGrid
           >
-            <Text fontSize="lg" mb="4">Inscritos da semana</Text>
-            <Chart
-              options={options}
-              series={series}
-              type="area"
-              height={160}
-            />
-          </Box>
+            <Box
+              p="8"
+              bg="gray.800"
+              borderRadius="8"
+              pb="4"
+            >
+              <Text fontSize="lg" mb="4">Inscritos da semana</Text>
+              <Chart
+                options={options}
+                series={series}
+                type="area"
+                height={160}
+              />
+            </Box>
 
-          <Box
-            p="8"
-            bg="gray.800"
-            borderRadius="8"
-            // pb="4"
-          >
-            <Text fontSize="lg" mb="4">Taxa de abertura</Text>
-            <Chart
-              options={options}
-              series={series}
-              type="area"
-              height={160}
-            />
-          </Box>
-        </SimpleGrid>
+            <Box
+              p="8"
+              bg="gray.800"
+              borderRadius="8"
+              // pb="4"
+            >
+              <Text fontSize="lg" mb="4">Taxa de abertura</Text>
+              <Chart
+                options={options}
+                series={series}
+                type="area"
+                height={160}
+              />
+            </Box>
+          </SimpleGrid>
+        </Flex>
       </Flex>
-    </Flex>
+    </>
   )
 }
