@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import { RiAddLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
@@ -27,6 +28,12 @@ export default function UsersList() {
     base: false,
     lg: true,
   });
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/users")
+      .then(response => response.json())
+      .then(data => console.log(data.users));
+  }, [])
 
   return (
     <>
