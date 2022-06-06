@@ -26,24 +26,24 @@ const options = {
   tooltip: {
     enabled: false,
   },
-  // xaxis: {
-  //   type: "datetime",
-  //   categories: [
-  //     '2022-04-24T00:00:00.000Z',
-  //     '2022-04-25T00:00:00.000Z',
-  //     '2022-04-26T00:00:00.000Z',
-  //     '2022-04-27T00:00:00.000Z',
-  //     '2022-04-28T00:00:00.000Z',
-  //     '2022-04-29T00:00:00.000Z',
-  //     '2022-04-30T00:00:00.000Z',
-  //   ],
-  //   axisBorder: {
-  //     color: theme.colors.gray[600],
-  //   },
-  //   axisTicks: {
-  //     color: theme.colors.gray[600],
-  //   },
-  // },
+  xaxis: {
+    type: "datetime",
+    categories: [
+      '2022-04-24T00:00:00.000Z',
+      '2022-04-25T00:00:00.000Z',
+      '2022-04-26T00:00:00.000Z',
+      '2022-04-27T00:00:00.000Z',
+      '2022-04-28T00:00:00.000Z',
+      '2022-04-29T00:00:00.000Z',
+      '2022-04-30T00:00:00.000Z',
+    ],
+    axisBorder: {
+      color: theme.colors.gray[600],
+    },
+    axisTicks: {
+      color: theme.colors.gray[600],
+    },
+  },
   fill: {
     opacity: 0.3,
     type: 'gradient',

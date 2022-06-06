@@ -9,7 +9,7 @@ type User = {
 }
 
 export function makeServer() {
-  const numberOfUsers = 200;
+  const numberOfUsers = 10;
 
   const server = createServer({
     // Cria um modelo de usuário
@@ -33,7 +33,7 @@ export function makeServer() {
         },
         createdAt() {
           // Retorna uma data aleatória
-          return faker.date.recent(10).toLocaleDateString();
+          return faker.date.recent(10);
         },
       }),
     },
