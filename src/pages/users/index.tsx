@@ -17,52 +17,32 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
-// import { useEffect } from "react";
+
 import { RiAddLine } from "react-icons/ri";
 import { AiOutlineReload } from "react-icons/ai";
-import { useQuery } from "react-query";
 
 import { Header } from "../../components/Header";
-import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { useUsers } from "../../services/hooks/users/useUsers";
+import { Pagination } from "../../components/Pagination";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   createdAt: string;
 }
 
 export default function UsersList() {
-  const thirtyMinutes = 1000 * 60 * 30;
-
   const {
     data,
     isLoading,
     error,
     isFetching,
     refetch,
-  } = useQuery("users", async () => {
-    const response = await fetch("http://localhost:3000/api/users");
-    const data = await response.json();
-
-    const users = data.users.map((user: any) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-br', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        }),
-      }
-    })
-
-    return users;
-  }, {
-    staleTime: thirtyMinutes,
-  });
+  } = useUsers();
+  // Através do hooks useUsers, pegamos os dados retornados do nosso
+  // servidor fake.
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -130,7 +110,9 @@ export default function UsersList() {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {data.map((user: User) => (
+                    {/* O data possivelmente pode ser nulo, então é adicionado
+                    um Optional Chaining para evitar uma mensagem de erro */}
+                    {data?.map((user: User) => (
                       <>
                         <Tr key={user.id}>
                           <Td px={["4", "4", "6"]}>
