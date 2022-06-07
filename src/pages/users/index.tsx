@@ -19,6 +19,7 @@ import Head from "next/head";
 import Link from "next/link";
 // import { useEffect } from "react";
 import { RiAddLine } from "react-icons/ri";
+import { AiOutlineReload } from "react-icons/ai";
 import { useQuery } from "react-query";
 
 import { Header } from "../../components/Header";
@@ -35,7 +36,13 @@ interface User {
 export default function UsersList() {
   const thirtyMinutes = 1000 * 60 * 30;
 
-  const { data, isLoading, error } = useQuery("users", async () => {
+  const {
+    data,
+    isLoading,
+    error,
+    isFetching,
+    refetch,
+  } = useQuery("users", async () => {
     const response = await fetch("http://localhost:3000/api/users");
     const data = await response.json();
 
@@ -70,20 +77,36 @@ export default function UsersList() {
       <Box>
         <Header />
 
-        <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6" overflowX="auto">
+        <Flex w="100%" my="6" maxWidth={1480} mx="auto" px={["1rem", "6"]}>
           <Sidebar />
 
-          <Box flex="1" borderRadius={8} bg="gray.800" p="8">
+          <Box flex="1" borderRadius={8} bg="gray.800" p={["4", "8"]}>
             <Flex mb="8" justify="space-between" align="center">
-              <Heading size="lg" fontWeight="normal">Usuários</Heading>
+              <Heading size="lg" fontWeight="normal">
+                Usuários
 
-              <Link href="/users/create" passHref>
-                <Button as="a" size="sm" fontSize="sm" colorScheme="pink" leftIcon={
-                  <Icon as={RiAddLine} fontSize="20" />
+                {!isLoading && isFetching && (
+                  <Spinner
+                    size="sm"
+                    color="gray.500"
+                    ml="4"
+                  />
+                )}
+              </Heading>
+
+              <Flex gap={4}>
+                <Button size="md" fontSize="md" colorScheme="pink" onClick={
+                  () => refetch()
                 }>
-                  Novo
+                  <Icon as={AiOutlineReload} />
                 </Button>
-              </Link>
+
+                <Link href="/users/create" passHref>
+                  <Button as="a" size="md" fontSize="md" colorScheme="pink">
+                    <Icon as={RiAddLine} />
+                  </Button>
+                </Link>
+              </Flex>
             </Flex>
 
             {isLoading ? (
