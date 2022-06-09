@@ -1,4 +1,4 @@
-import { createServer, Factory, Model } from 'miragejs';
+import { createServer, Factory, Model, Response } from 'miragejs';
 // Biblioteca utilizada para gerar valores fakes
 import { faker } from '@faker-js/faker';
 
@@ -33,7 +33,7 @@ export function makeServer() {
         },
         createdAt() {
           // Retorna uma data aleatória
-          return faker.date.recent(10);
+          return faker.date.recent(100);
         },
       }),
     },
@@ -53,7 +53,38 @@ export function makeServer() {
       this.timing = 750; // 750 milisegundos
 
       // Cria uma rota de get para o endpoint /users
-      this.get('/users');
+      this.get('/users', function (schema, req) {
+        // Através do queryParams, recebemos 2 parametros. O numero de paginas e
+        // a quantidade de dados por pagina.
+        const { page = 1, per_page = 10 } = req.queryParams;
+
+        // Calculamos a quantidade de usuarios que há em nossa aplicação.
+        const total = schema.all('user').length;
+
+        // Calculamos o numero de usuarios que será exibido por paginas.
+        // Como nossos registros começas do zero, realizamos o seguinte calculo:
+        // (Numero de paginas - 1) * Numero de usuarios por pagina.
+        const pageStart = (Number(page) - 1) * Number(per_page);
+        // Pagina inicial + Numero de usuarios por pagina.
+        const pageEnd = pageStart + Number(per_page);
+        // O resultado ficara desta forma:
+
+        // (1-1) * 10 = 0 // 0 + 10 = 10; // Primeira pagina ira exibir os usuarios de 0 a 10
+        // (2-1) * 10 = 10 // 10 + 20 = 20; // Segunda pagina ira exibir os usuarios de 10 a 20
+        // E assim em diante.
+
+        // Nesta variavel, guardamos os usuarios da pagina exibida.
+        const users = this.serialize(schema.all('user')).users.slice(pageStart, pageEnd);
+
+        // Retornamos uma resposta contendo o status da requisiçao, uma variavel
+        // com o numero total de paginas e os usuarios encontrados para a pagina
+        // atual.
+        return new Response(
+          200,
+          { 'x-total-count': String(total) },
+          { users }
+        )
+      });
       // Cria uma rota de post para o endpoint /users
       this.post('/users');
 
