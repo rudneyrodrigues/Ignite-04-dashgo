@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Icon,
+  IconButton,
   Spinner,
   Table,
   Tbody,
@@ -75,16 +76,21 @@ export default function UsersList() {
               </Heading>
 
               <Flex gap={4}>
-                <Button size="md" fontSize="md" colorScheme="pink" onClick={
-                  () => refetch()
-                }>
-                  <Icon as={AiOutlineReload} />
-                </Button>
+                <IconButton
+                  aria-label="Recarregar"
+                  colorScheme="pink"
+                  icon={<Icon as={AiOutlineReload} />}
+                  onClick={() => refetch()}
+                />
 
                 <Link href="/users/create" passHref>
-                  <Button as="a" size="md" fontSize="md" colorScheme="pink">
-                    <Icon as={RiAddLine} />
-                  </Button>
+                  <IconButton
+                  as="a"
+                  aria-label="Recarregar"
+                  colorScheme="pink"
+                  icon={<Icon as={RiAddLine} />}
+                  onClick={() => refetch()}
+                />
                 </Link>
               </Flex>
             </Flex>
