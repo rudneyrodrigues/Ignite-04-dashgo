@@ -89,7 +89,6 @@ export default function UsersList() {
                   aria-label="Recarregar"
                   colorScheme="pink"
                   icon={<Icon as={RiAddLine} />}
-                  onClick={() => refetch()}
                 />
                 </Link>
               </Flex>
