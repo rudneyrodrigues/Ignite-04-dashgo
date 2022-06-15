@@ -9,7 +9,7 @@ type User = {
 }
 
 export function makeServer() {
-  const numberOfUsers = 100;
+  const numberOfUsers = 200;
 
   const server = createServer({
     // Cria um modelo de usuário
