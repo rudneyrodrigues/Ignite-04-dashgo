@@ -31,6 +31,9 @@ export function Pagination({
   currentPage = 1,
   onChangePage,
 }: PaginationProps) {
+  const userStart = (currentPage - 1) * registersPerPage;
+  const userEnd = userStart + registersPerPage;
+
   const lastPage = Math.floor(totalCountOfRegisters / registersPerPage);
 
   // Variável que verifica as paginas anteriores da pagina atual
@@ -46,7 +49,7 @@ export function Pagination({
   return (
     <Stack direction={["column", "row"]} mt="8" justify="space-between" align="center" spacing="6">
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
+        <strong>{userStart}</strong> - <strong>{userEnd}</strong> de <strong>{totalCountOfRegisters}</strong>
       </Box>
       <Stack direction="row" spacing="2">
 
@@ -54,7 +57,7 @@ export function Pagination({
             este componente será exibido */}
         {currentPage > (1 + siblingsCount) && (
           <>
-            <PaginationItem page={1} />
+            <PaginationItem onChangePage={onChangePage} page={1} />
             {currentPage > (2 + siblingsCount) && (
               <Text color="gray.300" w="8" textAlign="center">...</Text>
             )}
@@ -65,16 +68,16 @@ export function Pagination({
             seja maior que zero */}
         {previousPages.length > 0 && previousPages.map(page => {
           return (
-            <PaginationItem key={page} page={page} />
+            <PaginationItem onChangePage={onChangePage} key={page} page={page} />
         )})}
         
-        <PaginationItem page={currentPage} isCurrent />
+        <PaginationItem onChangePage={onChangePage} page={currentPage} isCurrent />
 
         {/* Este componente será exibido caso a nextPages
             seja maior que zero */}
         {nextPages.length > 0 && nextPages.map(page => {
           return (
-            <PaginationItem key={page} page={page} />
+            <PaginationItem onChangePage={onChangePage} key={page} page={page} />
         )})}
         
         {/* Caso a ultima pagina seja maior que a pagina atual + 1,
@@ -84,7 +87,7 @@ export function Pagination({
             {(currentPage + 1 + siblingsCount) < lastPage && (
               <Text color="gray.300" w="8" textAlign="center">...</Text>
             )}
-            <PaginationItem page={lastPage} />
+            <PaginationItem onChangePage={onChangePage} page={lastPage} />
           </>
         )}
         

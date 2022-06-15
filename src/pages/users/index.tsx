@@ -26,6 +26,7 @@ import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { useUsers } from "../../services/hooks/users/useUsers";
 import { Pagination } from "../../components/Pagination";
+import { useState } from "react";
 
 interface User {
   id: string;
@@ -35,13 +36,15 @@ interface User {
 }
 
 export default function UsersList() {
+  const [page, setPage] = useState(1);
+
   const {
     data,
     isLoading,
     error,
     isFetching,
     refetch,
-  } = useUsers();
+  } = useUsers(page);
   // Através do hooks useUsers, pegamos os dados retornados do nosso
   // servidor fake.
 
@@ -117,7 +120,7 @@ export default function UsersList() {
                   <Tbody>
                     {/* O data possivelmente pode ser nulo, então é adicionado
                     um Optional Chaining para evitar uma mensagem de erro */}
-                    {data?.map((user: User) => (
+                    {data.users?.map((user: User) => (
                       <>
                         <Tr key={user.id}>
                           <Td px={["4", "4", "6"]}>
@@ -137,8 +140,8 @@ export default function UsersList() {
                 </Table>
 
                 <Pagination
-                  currentPage={10}
-                  onChangePage={() => {}}
+                  currentPage={page}
+                  onChangePage={setPage}
                   totalCountOfRegisters={200}
                   registersPerPage={10}
                 />
