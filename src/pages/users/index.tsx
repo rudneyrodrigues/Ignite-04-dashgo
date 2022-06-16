@@ -1,20 +1,20 @@
 import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Spinner,
-  Table,
-  Tbody,
   Td,
-  Text,
   Th,
-  Thead,
   Tr,
-  useBreakpointValue
+  Box,
+  Flex,
+  Icon,
+  Text,
+  Table,
+  Thead,
+  Tbody,
+  Heading,
+  Spinner,
+  Checkbox,
+  IconButton,
+  useBreakpointValue,
+  Link as ChakraLink
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -27,6 +27,8 @@ import { Sidebar } from "../../components/Sidebar";
 import { useUsers } from "../../services/hooks/users/useUsers";
 import { Pagination } from "../../components/Pagination";
 import { useState } from "react";
+import { queryClient } from "../../services/queryClient";
+import { api } from "../../services/api";
 
 interface User {
   id: string;
@@ -43,7 +45,7 @@ export default function UsersList() {
     isLoading,
     error,
     isFetching,
-    refetch,
+    refetch
   } = useUsers(page);
   // Através do hooks useUsers, pegamos os dados retornados do nosso
   // servidor fake.
@@ -52,6 +54,17 @@ export default function UsersList() {
     base: false,
     lg: true,
   });
+
+  // Função que realiza o pré-carregamento dos dados do usuário e os salva em cache.
+  async function handlePrefetchUser(userId: number) {
+    await queryClient.prefetchQuery(['user', userId], async () => {
+      const response = await api.get(`users/${userId}`);
+
+      return response.data;
+    }, {
+      staleTime: 1000 * 60 * 5, // 5 minutos
+    })
+  }
 
   return (
     <>
@@ -128,7 +141,10 @@ export default function UsersList() {
                           </Td>
                           <Td>
                             <Box>
-                              <Text fontWeight="bold">{user.name}</Text>
+                              <ChakraLink color="purple.500" onMouseEnter={() => handlePrefetchUser(Number(user.id))}>
+                                <Text fontWeight="bold">{user.name}</Text>
+                              </ChakraLink>
+                              
                               <Text fontSize="sm" color="gray.300">{user.email}</Text>
                             </Box>
                           </Td>

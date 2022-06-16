@@ -85,6 +85,9 @@ export function makeServer() {
           { users }
         )
       });
+
+      this.get('/users/:id');
+      
       // Cria uma rota de post para o endpoint /users
       this.post('/users');
 
