@@ -134,23 +134,21 @@ export default function UsersList() {
                     {/* O data possivelmente pode ser nulo, então é adicionado
                     um Optional Chaining para evitar uma mensagem de erro */}
                     {data.users?.map((user: User) => (
-                      <>
-                        <Tr key={user.id}>
-                          <Td px={["4", "4", "6"]}>
-                            <Checkbox colorScheme="pink" />
-                          </Td>
-                          <Td>
-                            <Box>
-                              <ChakraLink color="purple.500" onMouseEnter={() => handlePrefetchUser(user.id)}>
-                                <Text fontWeight="bold">{user.name}</Text>
-                              </ChakraLink>
-                              
-                              <Text fontSize="sm" color="gray.300">{user.email}</Text>
-                            </Box>
-                          </Td>
-                          {isWideVersion && <Td>{user.createdAt}</Td>}
-                        </Tr>
-                      </>
+                      <Tr key={user.id}>
+                        <Td px={["4", "4", "6"]}>
+                          <Checkbox colorScheme="pink" />
+                        </Td>
+                        <Td>
+                          <Box>
+                            <ChakraLink color="purple.500" onMouseEnter={() => handlePrefetchUser(user.id)}>
+                              <Text fontWeight="bold">{user.name}</Text>
+                            </ChakraLink>
+                            
+                            <Text fontSize="sm" color="gray.300">{user.email}</Text>
+                          </Box>
+                        </Td>
+                        {isWideVersion && <Td>{user.createdAt}</Td>}
+                      </Tr>
                     ))}
                   </Tbody>
                 </Table>
