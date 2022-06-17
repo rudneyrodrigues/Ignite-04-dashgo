@@ -34,7 +34,7 @@ export function Pagination({
   const userStart = (currentPage - 1) * registersPerPage;
   const userEnd = userStart + registersPerPage;
 
-  const lastPage = Math.floor(totalCountOfRegisters / registersPerPage);
+  const lastPage = Math.ceil(totalCountOfRegisters / registersPerPage);
 
   // Variável que verifica as paginas anteriores da pagina atual
   const previousPages = currentPage > 1
