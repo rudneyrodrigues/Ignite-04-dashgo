@@ -32,7 +32,7 @@ export function Pagination({
   onChangePage,
 }: PaginationProps) {
   const userStart = (currentPage - 1) * registersPerPage;
-  const userEnd = userStart + registersPerPage;
+  const userEnd = (userStart + registersPerPage) < totalCountOfRegisters ? (userStart + registersPerPage) : totalCountOfRegisters;
 
   const lastPage = Math.ceil(totalCountOfRegisters / registersPerPage);
 
