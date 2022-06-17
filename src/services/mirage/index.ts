@@ -1,4 +1,4 @@
-import { createServer, Factory, Model, Response } from 'miragejs';
+import { createServer, Factory, Model, Response, ActiveModelSerializer, RestSerializer } from 'miragejs';
 // Biblioteca utilizada para gerar valores fakes
 import { faker } from '@faker-js/faker';
 
@@ -9,9 +9,14 @@ type User = {
 }
 
 export function makeServer() {
-  const numberOfUsers = 200;
+  const numberOfUsers = 208;
 
   const server = createServer({
+    serializers: {
+      // application: ActiveModelSerializer,
+      application: RestSerializer,
+    },
+
     // Cria um modelo de usuário
     models: {
       // O modelo de usuário recebe um array de usuários parcial do tipo User
@@ -74,7 +79,9 @@ export function makeServer() {
         // E assim em diante.
 
         // Nesta variavel, guardamos os usuarios da pagina exibida.
-        const users = this.serialize(schema.all('user')).users.slice(pageStart, pageEnd);
+        const users = this.serialize(schema.all('user'))
+          .users
+            .slice(pageStart, pageEnd);
 
         // Retornamos uma resposta contendo o status da requisiçao, uma variavel
         // com o numero total de paginas e os usuarios encontrados para a pagina
